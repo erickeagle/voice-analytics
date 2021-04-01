@@ -1,4 +1,5 @@
 numpy
+soundfile
 pandas
 Click==7.0
 Flask==1.1.1
