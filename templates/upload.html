@@ -1,102 +1,69 @@
-<html>
-<head>
-	<title>Time series forecasting</title>
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" >// <![CDATA[ 
-        function loading(){
-            $("#loading").show();
-            $("#content").hide();       
-        }
-// ]]></script>
-<meta charset="utf-8" />
+{% extends "layout.html" %}
+
+
+{% block head %}
+<title>Voice Analytics</title>
+
 <style>
-table.dataframe, .dataframe th, .dataframe td {
-  border: none;
-  border-bottom: 1px solid #C8C8C8;
-  border-collapse: collapse;
-  text-align:left;
-  padding: 10px;
-  margin-bottom: 40px;
-  font-size: 0.9em;
-  color: #FFFFFF;
-}
-	.heading { color:  #000000;}  
-body {
-
-    padding:0px;
-    margin:20px;
-   
-    background-size:auto;
-    width:100vw;
-    height:100vh;
-    
-   
-}
-
-
-div#loading {
- 
-    width: 1700px;
-    height: 35px;
-    display: none;
-    background: url('{{ url_for('static', filename='loading_bar.gif' ) }}') no-repeat;
-    cursor: wait;
-    
-  }
-
 
 </style>
+{% endblock %}
 
-</head>
-   <body>
-      
-	  <div class="container" >
-		<div class="row">
-
-		  <form  method="POST" action="/submit_upload" enctype="multipart/form-data">
-		  	<div class="col-sm-9">
-	
-
-
-
-			 <div class="form-group  purple-border">
-				  <label for="comment"  class="heading" >Enter gender</label>
-				  <input type="radio" name="gender" value="m"> Male</input>
-<input type="radio" name="gender" value="f"> Female</input>
-
+{% block body %}
+<div class="text-center">
+	For recording an audio instead, visit: <br>
+	<a href="/">here</a>
+</div>
+<br><br>
+<form method="POST" action="/submit_upload" enctype="multipart/form-data">
+	<div class="form-row">
+		<div class="col-6">
+			<div class="form-check">
+				<label><b>Gender</b></label><br>
+				<input type="radio" id="male" name="gender" value="m">
+				<label for="male">Male</label>
+				<input type="radio" id="female" name="gender" value="f">
+				<label for="female">Female</label>
 			</div>
-			<div class="form-group  purple-border">
-				  <label for="comment"  class="heading">Enter age</label>
-				  <textarea class="form-control" rows="2" id="query2" name="query2" rows="2" cols="5" autofocus>{{query2}}</textarea>
-			</div>
-			
-	
-			<h4  class="heading">Upload your audio file</h4>
-
-				<input type="file" name="userfile" class="btn btn-primary" >
-
-			</div>
-			<div class="col-sm-3">
-			<button type="submit" class="btn btn-primary" name="submit"onclick="loading();">SUBMIT</button>
-			</div>
-		  </form><br>
-		  <div id="loading" >
-		  	<br>
-  <p class="heading"> Please wait</p>
-		  </div>
-		  </div>
-		<br>  
-		<div class=page>
- 		<h1  class="heading">Output</h1>
- 		<div class="form-group  purple-border">
-				  
-				  <textarea class="form-control" rows="2" id="output" name="output" rows="2" cols="5" autofocus>{{output}}</textarea>
-			</div>
- 		
+		</div>
+		<div class="col-6">
+			<label for="query2"><b>Age</b></label>
+			<input type="number" class="form-control" min="0" step="1" max="100" name="query2" id="query2"
+				allow-natural-numbers />
+		</div>
 	</div>
-	</div>		
-   </body>
-</html>
+	<br><br>
+	<div class="form-row">
+		<div class="col-12">
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="userfile" name="userfile">
+				<label class="custom-file-label" for="customFile">Upload your audio file</label>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="form-row">
+		<button type="submit" class="btn btn-warning" name="submit">SUBMIT</button>
+	</div>
+</form><br>
+</div>
+<br>
+<div class="page container">
+	<h1 class="heading">Output</h1>
+	<div class="form-group  purple-border">
+
+		<textarea class="form-control" rows="2" id="output" name="output" rows="2" cols="5"
+			style="width: 100%;height: 200px" autofocus>{{output}}</textarea>
+	</div>
+
+</div>
+
+<script>
+	//for automatically changing the file name when a file is selected
+	$('#userfile').on('change', function () {
+		var fileName = $(this).val();
+		var tmp = fileName.split("\\");
+		$(this).next('.custom-file-label').html(tmp[tmp.length - 1]);
+	})
+</script>
+{% endblock %}
