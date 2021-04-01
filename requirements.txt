@@ -11,5 +11,5 @@ Pillow
 librosa
 parselmouth
 pathlib
-PIL
+
 pickle
