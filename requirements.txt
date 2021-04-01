@@ -11,5 +11,3 @@ Pillow
 librosa
 parselmouth
 pathlib
-
-pickle
