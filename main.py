@@ -1,6 +1,6 @@
 
-import parselmouth
-from parselmouth.praat import call
+#import parselmouth
+#from parselmouth.praat import call
 import librosa
 import pandas as pd
 import numpy as np
